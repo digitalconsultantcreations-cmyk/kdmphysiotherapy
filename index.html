@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KMD Physiotherapy Clinic</title>
+<style>
+:root{--bg:#f2f7fb;--card:#fff;--ink:#0f2a43;--mute:#566f86;--line:#d8e4ee;--accent:#0f5fa8;--accent-ink:#fff;--gold:#e0a800;--ok:#1d8a4e;--warn:#b26a00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1b2b;--card:#112a40;--ink:#e8f1f9;--mute:#93aec6;--line:#25435e;--accent:#3d95e0}}
+:root[data-theme="dark"]{--bg:#0a1b2b;--card:#112a40;--ink:#e8f1f9;--mute:#93aec6;--line:#25435e;--accent:#3d95e0}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:480px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:12px;margin:8px 0 16px}
+.logo{width:46px;height:46px;border-radius:14px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:24px}
+h1{font-size:20px;margin:0}
+.sub{color:var(--mute);font-size:13px}
+.tabs{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;color:var(--mute);padding:10px;border-radius:9px;font:inherit;font-weight:600}
+.tabs button.on{background:var(--accent);color:var(--accent-ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.pk{display:flex;gap:10px;margin-top:10px}
+.pk div{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.pk b{display:block;font-size:22px;color:var(--accent)}
+.pk .tag{font-size:11px;font-weight:700;color:var(--ok)}
+label{display:block;font-size:13px;font-weight:600;color:var(--mute);margin:12px 0 4px}
+label:first-child{margin-top:0}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:80px;resize:vertical}
+.row{display:flex;gap:10px}.row>div{flex:1}
+.btn{display:block;width:100%;text-align:center;border:0;border-radius:12px;padding:14px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;margin-top:12px;text-decoration:none}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.note{font-size:12px;color:var(--mute);margin-top:8px}
+.fare{display:flex;justify-content:space-between;align-items:baseline}.fare b{font-size:30px}
+.alert{border-left:4px solid var(--warn);padding-left:10px}
+.trip{border-top:1px solid var(--line);padding:12px 0}.trip:first-child{border-top:0}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--line);margin-left:6px}
+.pill.c{background:var(--accent);color:var(--accent-ink)}.pill.d{background:var(--ok);color:#fff}
+.sm{display:flex;gap:8px;margin-top:8px}
+.sm button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:13px}
+.stat{display:flex;gap:10px}.stat div{flex:1;text-align:center}.stat b{display:block;font-size:22px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">✚</div><div><h1 id="brand"></h1><div class="sub">Book your physiotherapy session</div></div></header>
+<div class="tabs"><button id="t1" class="on">Book a session</button><button id="t2">Clinic log</button></div>
+
+<section id="book">
+<div class="card"><b>Session packages</b>
+<div class="pk"><div><b id="p1"></b>1 session</div><div><b id="p2"></b>2 sessions<div class="tag" id="save"></div></div></div></div>
+<div class="card">
+<label>Your name</label><input id="name" autocomplete="name" placeholder="Full name">
+<label>Phone</label><input id="phone" type="tel" autocomplete="tel" placeholder="Best number to reach you">
+<label>Package</label><select id="pkg"></select>
+<label>Visit type</label><select id="vt"><option>First visit</option><option>Returning patient</option></select>
+<div class="row"><div><label>Preferred date</label><input id="date" type="date"></div><div><label>Preferred time</label><input id="time" type="time"></div></div>
+<label>What would you like help with? (keep it brief)</label><textarea id="note" placeholder="e.g. lower back pain, recovering from an injury"></textarea>
+</div>
+<div class="card"><div class="fare"><span class="sub">Package price</span><b id="fare"></b></div><div class="note">The clinic will confirm your appointment time on WhatsApp.</div></div>
+<a class="btn" id="send" href="#">Request booking on WhatsApp</a>
+<button class="btn alt" id="copy">Copy request text</button>
+<div class="note" id="msg"></div>
+<a class="btn alt" id="fb" href="https://www.facebook.com/share/1CEr4jSmXF/" target="_blank" rel="noopener">Visit our Facebook page</a>
+<div class="card alert note" style="margin-top:14px">Not for emergencies. If someone is in urgent danger, call 811 or 999. Please keep health details brief here; the therapist will ask more at your visit.</div>
+</section>
+
+<section id="log" class="hide">
+<div class="card stat"><div><b id="sN">0</b><span class="sub">Requests</span></div><div><b id="sP">0</b><span class="sub">Pending</span></div><div><b id="sE">0</b><span class="sub">Completed value</span></div></div>
+<div class="card" id="list"></div>
+<button class="btn alt" id="clear">Clear completed</button>
+<div class="note">Requests sent from this device are saved here only, on this device. Keep patient details brief and private.</div>
+</section>
+</div>
+
+<script>
+var CFG={brand:"KMD Physiotherapy Clinic",phone:"18684694934",cur:"TT$",pk:[{n:"1 session",price:500},{n:"2 sessions",price:800}]};
+var $=function(i){return document.getElementById(i)};
+var store={get:function(){try{return JSON.parse(localStorage.getItem("kmd")||"[]")}catch(e){return []}},set:function(v){try{localStorage.setItem("kmd",JSON.stringify(v))}catch(e){}}};
+var mem=store.get();
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+$("brand").textContent=CFG.brand;
+$("p1").textContent=CFG.cur+CFG.pk[0].price;$("p2").textContent=CFG.cur+CFG.pk[1].price;
+$("save").textContent="Save "+CFG.cur+(CFG.pk[0].price*2-CFG.pk[1].price);
+CFG.pk.forEach(function(p,i){var o=document.createElement("option");o.value=i;o.textContent=p.n+" – "+CFG.cur+p.price;$("pkg").appendChild(o)});
+$("date").value=new Date().toISOString().slice(0,10);
+function pk(){return CFG.pk[+$("pkg").value||0]}
+function msg(){
+ return "Hello, I’d like to book at "+CFG.brand+".\nName: "+$("name").value+"\nPhone: "+$("phone").value+"\nPackage: "+pk().n+" ("+CFG.cur+pk().price+")\nVisit: "+$("vt").value+
+ "\nPreferred: "+$("date").value+" "+$("time").value+($("note").value.trim()?"\nNote: "+$("note").value.trim():"");
+}
+function refresh(){$("fare").textContent=CFG.cur+pk().price;$("send").href="https://wa.me/"+CFG.phone+"?text="+encodeURIComponent(msg())}
+document.querySelectorAll("#book input,#book select,#book textarea").forEach(function(e){e.addEventListener("input",refresh)});
+refresh();
+function valid(){
+ if(!$("name").value.trim()||!$("phone").value.trim()){$("msg").textContent="Please fill in your name and phone.";return false}
+ mem.unshift({id:Date.now(),name:$("name").value,phone:$("phone").value,pkg:pk().n,price:pk().price,vt:$("vt").value,when:$("date").value+" "+$("time").value,note:$("note").value,st:"Pending"});
+ store.set(mem);render();return true;
+}
+$("send").addEventListener("click",function(e){if(!valid()){e.preventDefault();return}$("msg").textContent="Request saved. WhatsApp should open with your message."});
+$("copy").addEventListener("click",function(){
+ if(!valid())return;
+ try{navigator.clipboard.writeText(msg());$("msg").textContent="Request copied. Paste it into a text or call the clinic."}catch(e){$("msg").textContent="Couldn’t copy. Use the WhatsApp button instead."}
+});
+function render(){
+ var p=mem.filter(function(t){return t.st==="Pending"}).length;
+ var v=mem.filter(function(t){return t.st==="Done"}).reduce(function(a,t){return a+t.price},0);
+ $("sN").textContent=mem.length;$("sP").textContent=p;$("sE").textContent=CFG.cur+v;
+ var h="";
+ mem.forEach(function(t){
+  var cls=t.st==="Confirmed"?" c":t.st==="Done"?" d":"";
+  h+='<div class="trip"><b>'+esc(t.name)+'</b><span class="pill'+cls+'">'+t.st+'</span>'+
+  '<div class="sub">'+esc(t.when)+' · '+esc(t.pkg)+' · '+CFG.cur+t.price+' · '+esc(t.vt)+'</div>'+
+  (t.note?'<div class="sub">'+esc(t.note)+'</div>':'')+
+  '<div class="sm"><button data-a="call" data-i="'+t.id+'">Call</button><button data-a="next" data-i="'+t.id+'">'+(t.st==="Pending"?"Confirm":t.st==="Confirmed"?"Complete":"Reopen")+'</button><button data-a="del" data-i="'+t.id+'">Delete</button></div></div>';
+ });
+ $("list").innerHTML=h||'<div class="sub">No requests yet.</div>';
+}
+$("list").addEventListener("click",function(e){
+ var a=e.target.dataset.a;if(!a)return;var id=+e.target.dataset.i;
+ var t=mem.filter(function(x){return x.id===id})[0];
+ if(a==="call"){location.href="tel:"+t.phone;return}
+ if(a==="next")t.st=t.st==="Pending"?"Confirmed":t.st==="Confirmed"?"Done":"Pending";
+ if(a==="del")mem=mem.filter(function(x){return x.id!==id});
+ store.set(mem);render();
+});
+$("clear").addEventListener("click",function(){mem=mem.filter(function(t){return t.st!=="Done"});store.set(mem);render()});
+function tab(b){$("book").classList.toggle("hide",b!==1);$("log").classList.toggle("hide",b!==2);$("t1").classList.toggle("on",b===1);$("t2").classList.toggle("on",b===2)}
+$("t1").onclick=function(){tab(1)};$("t2").onclick=function(){tab(2)};
+render();
+</script>
+</body>
+</html>
